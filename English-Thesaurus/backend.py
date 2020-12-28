@@ -1,50 +1,50 @@
-#If the Data is huge then to improve system performance we need Database in backend to acrryout all operations
+# If the Data is huge then to improve system performance we need Database in backend to carryout all operations
 import mysql.connector
 from difflib import get_close_matches
+import sys
 
+# open a database connection
 con = mysql.connector.connect(
-user = "ardit700_student",
-password = "ardit700_student",
-host = "108.167.140.122",
-database = "ardit700_pm1database"
+    user="ardit700_student",
+    password="ardit700_student",
+    host="108.167.140.122",
+    database="ardit700_pm1database"
 )
-
+# prepare a cursor object using cursor() method
 cursor = con.cursor()
 
-word=input("Enter the word: ")
 
-query = cursor.execute("SELECT Definition FROM Dictionary WHERE Expression = '%s'" % word)
-results = cursor.fetchall()
-print(type(results))
-data = dict(results)
-""" def thesaurus(word):
-    word=word.lower()
-    if word in results:
-        return results[word]
-    
-    #if user entered "texas" this will check for "Texas" as well.
-    elif word.title() in results:                        
-        return results[word.title()]
-    #in case user enters words like USA or NATO
-    elif word.upper() in results: 
-        return results[word.upper()]
+# function to search the user entry word
+def thesaurus(word):
+    word = word.lower()  # In case user types word in caps
+    # execute the SQL query using execute() method.
+    query = cursor.execute("SELECT Definition FROM Dictionary WHERE Expression = '%s'" % word)
+    # fetch all of the rows from the query
+    results = cursor.fetchall()
+    if results:
+        for result in results:
+            print(result[0])
+    # if user entered "texas" this will check for "Texas" as well.
 
-    #if user enters the word which is not found in dictionary.extract similar words which are available,then return the word
-
-    elif len(get_close_matches(word,results.keys())) > 0:
-        choice = input("Did you mean %s instead? enter y for yes, or n for no: " % get_close_matches(word,results.keys())[0])     
-        if choice == 'y':
-            #it returns the first possible match
-            return results[get_close_matches(word,results.keys())[0]]             
-        elif choice == 'n':
-            return 'Sorry! that word does not exist. Please check the word and type a correct one.'
-        else:
-            return "We didn't understand your response.Please"
+    elif word.title() in results:
+        for result in results:
+            print(result[0])
+    # in case user enters words like USA or NATO
+    elif word.upper() in results:
+        for result in results:
+            print(result[0])
     else:
-        return "Entered word doesn't exist.Please check again and type correct word!" """
+        print("Sorry! no word found!")
+  
+"""
+# close the cursor object
+cursor.close()
 
-if results:
-    for result in results:
-        print(result[0])
-else:
-    print("No word found!")
+# close the connection
+con.close() 
+
+# exit the program
+        sys.exit()"""
+# take user input to look for the word
+word = input("Enter the word: ")
+thesaurus(word)
