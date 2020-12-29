@@ -1,6 +1,5 @@
 # If the Data is huge then to improve system performance we need Database in backend to carryout all operations
 import mysql.connector
-from difflib import get_close_matches
 import sys
 
 # open a database connection
@@ -36,6 +35,10 @@ def thesaurus(word):
     else:
         print("Sorry! no word found!")
   
+
+# take user input to look for the word
+word = input("Enter the word: ")
+thesaurus(word)
 """
 # close the cursor object
 cursor.close()
@@ -45,6 +48,3 @@ con.close()
 
 # exit the program
         sys.exit()"""
-# take user input to look for the word
-word = input("Enter the word: ")
-thesaurus(word)
